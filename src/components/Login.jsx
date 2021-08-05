@@ -104,14 +104,13 @@ import {
     let { login,signup } = useContext(AuthContext);
     let useStyles=makeStyles({
          centerDivs:{
-             height:"100vh",
-             width:"100vw",
+             height:"90vh",
+             width:"90vw",
              display:"flex",
              justifyContent:"center",
-             alignItems:"center"
-
-
-         },
+             alignItems:"center",
+             
+             },
          image: {
             height: "6rem",
             backgroundSize: "contain"
