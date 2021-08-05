@@ -94,6 +94,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Overlay(props) {
+  console.log("97",props.userProfile);
   const [userComment, setComment] = useState("");
   const [postData, setPost] = useState();
   const [commentArr, setUserComment] = useState([]);
@@ -210,7 +211,7 @@ export default function Overlay(props) {
             <Card className={classes.cover} style={{ overflow: "auto" }}>
               <div className={classes.hidden}>
                 <CardMedia>
-                  <Avatar alt="Remy Sharp " src={props.userProfile}></Avatar>
+                  <Avatar alt="Remy Sharp " src={props.user.profileUrl}></Avatar>
                 </CardMedia>
                 <Typography className={classes.text}>
                   {props.userName}

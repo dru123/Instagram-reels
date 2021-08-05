@@ -205,7 +205,7 @@ console.log(dataObject.data());
 <Avatar alt="Remy Sharp "  className={classes.avatar} src={user?.profileUrl}  style={{marginLeft:"26%",marginTop:"2%",height:"20vh",width:"10vw"}}></Avatar>
 <Typography style={{float:"right",width:"30%",marginTop:"-8%",fontSize:"35px",fontWeight:"bold"}}>{user?.username}</Typography>
 <Typography style={{float:"right",width:"30%",marginTop:"-5%",fontSize:"25px"}}>Number of posts:{videos.length}</Typography>
-<Typography style={{float:"right",width:"30%",marginTop:"-2.4%",fontSize:"25px"}}>Email Id:<Typography style={{marginLeft:"22%",marginTop:"-6%",fontSize:"20px",fontWeight:"bold"}}>{user?.email}</Typography></Typography>
+<Typography style={{float:"right",width:"30%",marginTop:"-2.4%",fontSize:"25px"}}>Email Id:<Typography style={{marginLeft:"22%",marginTop:"-7.3%",fontSize:"20px",fontWeight:"bold"}}>{user?.email}</Typography></Typography>
 </div>
 <div style={{display:"flex",justifyContent:"space-evenly"}} >
 {

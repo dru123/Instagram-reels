@@ -6,9 +6,28 @@ import v4 from '/frog.mp4'
 export default function IntersectionDemo(){
     function callBack(entries){
         console.log(enteries);
-        entries.forEach((entry)=>{// entry yh pr ek ekk video element  h usko show kr rh h us pr event listenrr attahch kra h
-            let child =entry.target.children[0];
-            console.log(child.id);
+        // entries.forEach((entry)=>{// entry yh pr ek ekk video element  h usko show kr rh h us pr event listenrr attahch kra h
+        //     let child =entry.target.children[0];
+        //     console.log(child.id);
+
+        entries.forEach((entry) => {
+            let child = entry.target.children[0];
+            // console.log(child.id)
+            // play -> async work 
+            // pause -> sync work
+            // if (entry.isIntersecting) {
+            //     console.log(child.id)
+            // } else {
+            //     console.log(child.id)
+
+            // }
+            
+            child.play().then(function(){
+              if (entry.isIntersecting == false) {
+                child.pause();
+            }  
+            })
+        
         })
 
         useEffect( function fn()  {
@@ -19,7 +38,7 @@ export default function IntersectionDemo(){
             }
             let observer=new IntersectionObserver(callBack,conditionObject);//jese condition satisfy hogi calll back chlega 
             let elements=document.querySelectorAll(".video-container");
-            elements.forEach((elv)=>{
+            elements.forEach((el)=>{
                 observer.observe(el);// event listenr attach kr diya hr ek video element m ..
             })
         }, [])
