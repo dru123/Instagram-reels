@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   text: {
     color: "white",
     fontFamily: "serif",
-    fontSize: "2rem",
+    fontSize: "1.5rem",
     marginLeft: "1rem",
   },
   cover: {
@@ -165,25 +165,14 @@ export default function Overlay(props) {
   }, [postData]);
 
 
-  // useEffect(async ()=>{
-  //   // console.log("puid",props.puid);
-  //   let postRef=await database.posts.onSnapshot(
-  //     async snapshot=>{
-  //       console.log("168",snapshot);
-  //       let posts=snapshot.docs.map(doc=>doc.data());
-  //       console.log(posts);
-  //       let commentsArr=posts.comments;
-  //       console.log(commentsArr);
-  //     }
-
-  //   )
-  // },[])
+  
   return (
 
     
     <>
     {
-      console.log("170",commentArr)
+      console.log("170",commentArr),
+      console.log(props.userName)
     }
       <div className={classes.details}>
         <Container>
@@ -191,8 +180,7 @@ export default function Overlay(props) {
             <Card>
               <CardMedia style={{ width: "30rem" }}>
                 <video
-                  muted={true}
-                  autoPlay
+                  
                   style={{
                     height: "80vh",
                     width: "100%",
@@ -202,7 +190,7 @@ export default function Overlay(props) {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                  }}
+                  }} controls
                 >
                   <source src={props.videoUrl}></source>
                 </video>

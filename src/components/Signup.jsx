@@ -234,7 +234,7 @@ function Signup(props) {
             // 1
             let res = await signup(email, password);
             let uid = res.user.uid;
-            console.log(uid);
+            console.log("signin",uid);
             const uploadTaskListener = storage.ref(`/users/${uid}/profileImage`).put(file);
             // fn1 -> progress
             // fn2 -> error 

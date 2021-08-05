@@ -228,35 +228,26 @@ function Feed() {
                 let videos = snapshot.docs.map(doc => doc.data());
 
                 console.log(videos);
-                // let videoUrls = videos.map(video =>);
-                // let auidArr = videos.map(video => video.auid);
-                // let usersArr = [];
-                // for (let i = 0; i < auidArr.length; i++) {
-                //     let userObject = await database.user.doc(auidArr[i]).get();
-                //     usersArr.push(userObject)
-                // }
+            
                 let videosArr = [];
                 let visibleArr = [];
 
                 for (let i = 0; i < videos.length; i++) {
                     let videoUrl = videos[i].url;
-                    console.log(videos[i]);
+                    console.log(user);
                     let auid = videos[i].auid;
+                    console.log(auid);
                     let id = snapshot.docs[i].id;
 
-                    // console.log(id);
+           
                     let userObject = await database.users.doc(auid).get();
+                    console.log(userObject);
                     let userProfileUrl = userObject.data().profileUrl;
                     let userName = userObject.data().username;
+                    console.log("username",userName);
                     let like = [];
                     like = videos[i].likes;
-                    // console.log(like);
-                    // for(let i=0;i<like.length;i++){
-                    //     if(like[i]==currUser.uid){
-                    //         setLiked(true);
-                    //     }
-                    // }
-
+                 
                     visibleArr.push(false);
 
                     videosArr.push({
@@ -279,15 +270,7 @@ function Feed() {
             })
         return unsub;
     }, [])
-    //  useEffect(async ()=>{
-    //     let unsub = await database.posts.orderBy("createdAt", "desc")
-    //     .onSnapshot(async snapshot => {
-    //         console.log(snapshot);
-    //         let videos = snapshot.docs.map(doc => doc.data());
-
-    // },[])
-
-
+  
     return (
         pageLoading == true ? <div>Loading..</div> :
             <div>
@@ -341,7 +324,7 @@ function Feed() {
 
                 <div className="feed">
                     {videos.map((videoObj, idx) => {
-                        console.log(videoObj);
+                        console.log(videoObj.videoUrl);
                         return <div className="video-container" style={{ display: "flex", position: "relative", "justifyContent": "center", height:"90vh",alignItems:"center" }}>
                             <Video
                                 videoObj={videoObj}
@@ -379,7 +362,9 @@ function Feed() {
 export default Feed
 // 999029173
 function Video(props) {
-
+    const[userData,setUserData]=useState();
+    let { signOut, currUser } = useContext(AuthContext);
+      const[muted,setMuted]=useState(false);
     const useStyles = makeStyles((theme) => ({
         root: {
             '& > *': {
@@ -426,7 +411,7 @@ function Video(props) {
         },
         userName: {
             position: "absolute",
-            fontWeight: "bold", color: 'white', fontFamily: "serif", fontSize: "2rem",
+            fontWeight: "bold", color: 'white', fontFamily: "serif", fontSize: "1.5rem",
             bottom: "27.5%",
             left: "45%"
         },
@@ -446,46 +431,9 @@ function Video(props) {
     const classes = useStyles();
     console.log(props.userProfile);
     console.log(props.userName);
-    // function callBack(entries){
-    //     // console.log(entries);
-    //     // entries.forEach((entry)=>{// entry yh pr ek ekk video element  h usko show kr rh h us pr event listenrr attahch kra h
-    //     //     let child =entry.target.children[0];
-    //     //     console.log(child.id);
+    console.log(props.src);
 
-    //     entries.forEach((entry) => {
-    //         let child = entry.target.children[0];
-    //         console.log(child);
-    //         // console.log(child.id)
-    //         // play -> async work 
-    //         // pause -> sync work
-    //         // if (entry.isIntersecting) {
-    //         //     console.log(child.id)
-    //         // } else {
-    //         //     console.log(child.id)
-
-    //         // }
-
-    //         child.play().then(function(){
-    //           if (entry.isIntersecting == false) {
-    //             child.pause();
-    //         }  
-    //         })
-
-    //     })
-    // }
-    // useEffect( function fn()  {
-    //     //ui
-    //     let conditionObject={
-    //         root:null,//full page visible hona chaiye
-    //         threshold:"0.9"//90% area  m visible ho jyi video jese hi chnage hoga area km y jyda dubara call hoga child print krega
-    //     }
-    //     let observer=new IntersectionObserver(callBack,conditionObject);//jese condition satisfy hogi calll back chlega 
-    //     let elements=document.querySelectorAll(".video-container");
-    //     // console.log("elements",elements);
-    //     elements.forEach((el)=>{
-    //         observer.observe(el);// event listenr attach kr diya hr ek video element m ..
-    //     })
-    // }, [])
+   
     function callBack(enteries) {
         enteries.forEach((entry) => {
             console.log(entry, "483");
@@ -503,9 +451,12 @@ function Video(props) {
         threshold: "0.9",
     }
     const handleMutted = (e) => {
-        console.log(e);
+        console.log(e,"hi i m  in mutted");
+      
         e.preventDefault();
         e.target.muted = !e.target.muted;
+
+        
     }
 
     let observer = new IntersectionObserver(callBack, conditionObject);
@@ -524,43 +475,31 @@ function Video(props) {
             next.scrollIntoView({ behavior: "smooth" });
         }
     }
+    useEffect(async () => {
+        console.log("hi");
+        console.log(currUser.uid);
+        // how get a document from a collection in firebase 
+        // auth user doen't contains any other data besides email ,password , uid
+        //  you need to get the complete document from  the firstore using either of email or uid 
+        let dataObject = await database.users.doc(currUser.uid).get();
+        setUserData(dataObject.data());
+        console.log(dataObject.data());
+       
+
+    }, [])
     return (
         <>
-                {/* <video 
-       style= {{
-        height:"78vh",
-        marginTop:"2rem",
-        marginBottom:"6rem",
-        // marginTop:"0.1rem",
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"center"
-        }}
-       
-         autoPlay muted="true" id={props.id}
-        >
-            <source src={
-                 props.src
-              }type="video/mp4"
-             ></source>
-     
-      </video> */}
+            
                 <video
                     style={{
                         height: "70%",
-                        // width:"50%",
-                    //    marginLeft:"30%",
-                        // marginTop: "0rem",
-                        // marginBottom: "8rem",
-                        // marginTop:"0.1rem",
-                        // minHeight:"600px !important",
-                        // maxHeight:"600px !important",
+                       
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center"
                     }}
-                    // autoPlay
-                    onEnded={(e) => { handleNextVideo(e) }} src={props.src} onClick={(e) => { handleMutted(e) }} id={props.id}></video>
+                    autoPlay
+                    onEnded={(e) => {props.isCommentActive[props.idx]==true?handleMutted(e): handleNextVideo(e) }} src={props.src} onClick={(e) => { handleMutted(e) }} id={props.id}></video>
 
             <Avatar alt="Remy Sharp " className={classes.videoImage} src={props.userProfile}
             ></Avatar>
@@ -579,8 +518,8 @@ function Video(props) {
                     videoUrl={props.src}
                     handleLiked={props.handleLiked}
                     isLiked={props.isLiked}
-                    userName={props.userName}
-                    userProfile={props.userProfileUrl}
+                    userName={userData.username}
+                    userProfile={userData.profileUrl}
                     user={props.user}
                     puid={props.puid}
                     videos={props.videos}
@@ -593,3 +532,9 @@ function Video(props) {
     )
 }
 // color:"black",fontSize:"1.5rem", fontFamily:"sans-serif" ,fontWeight:"bold"
+
+
+
+
+
+// https://my-project-8602e.web.app
