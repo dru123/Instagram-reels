@@ -22,7 +22,25 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 10px 0px;
 }
+.MuiContainer-root.MuiContainer-maxWidthLg{
+  padding-left: 24px;
+  padding-right: 24px;
+  position: absolute !important;
+  top: 113px !important;}
+
+.cmtDiv::-webkit-scrollbar {
+  height: 0.11px;  /* Remove scrollbar space */
+  width: 0.1px;
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+.cmtDiv::-webkit-scrollbar-thumb {
+  background:transparent;
+  height:0.1px;
+}
+
 
 .App-link {
   color: #61dafb;
