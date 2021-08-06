@@ -134,12 +134,22 @@ function Feed() {
 
         // console.log(isLiked);
     }
-    const handleComment = (id) => {
+    const handleComment = (id,event) => {
+        let videoElem= event.currentTarget.parentNode.parentNode.firstChild;
         let visible = [...isCommentActive];
         for (let i = 0; i < isCommentActive.length; i++) {
+
             visible[i] = false;
         }
+        if(isCommentActive[id]==false){
         visible[id] = true;
+        videoElem.pause();}
+        else{
+         visible[id]=false;
+    //    videoElem.play();
+        }
+        // let videoElem= event.currentTarget.parentNode.parentNode.firstChild;
+       
 
         setCommentActive(visible);
 
@@ -509,7 +519,7 @@ function Video(props) {
             <FavouriteIcon className={[classes.icon, classes.heart, props.videoObj.liked == false ? classes.notSelected : classes.selected]}
                 onClick={() => { props.handleLiked(props.puid, props.videoObj.liked) }}></FavouriteIcon>
             <div className={classes.videoDisplay}>
-                <ChatBubbleIcon className={[classes.icon, classes.chat]} onClick={() => { props.handleComment(props.idx) }}></ChatBubbleIcon>
+                <ChatBubbleIcon className={[classes.icon, classes.chat]} onClick={(e) => { props.handleComment(props.idx,e) }}></ChatBubbleIcon>
 
                 {props.isCommentActive[props.idx] == true ? <Overlay
 
@@ -523,7 +533,10 @@ function Video(props) {
                     user={props.user}
                     puid={props.puid}
                     videos={props.videos}
-
+                    idx={props.idx}
+                    handleComment={props.handleComment}
+                    // comment={props.isCommentActive}
+                    // setCommentActive={props.setCommentActive}
                 ></Overlay> : null}
             </div>
 

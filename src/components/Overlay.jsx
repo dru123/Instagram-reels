@@ -8,6 +8,7 @@ import {
   Container,
   Paper,
 } from "@material-ui/core";
+import CloseIcon from '@material-ui/icons/Close';
 import Avatar from "@material-ui/core/Avatar";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FavouriteIcon from "@material-ui/icons/Favorite";
@@ -164,7 +165,11 @@ export default function Overlay(props) {
     setUserComment(allComments);
   }, [postData]);
 
+const handleActive=(idx,event)=>{
 
+props.handleComment(idx,event);
+
+}
   
   return (
 
@@ -204,9 +209,9 @@ export default function Overlay(props) {
                 <Typography className={classes.text}>
                   {props.userName}
                 </Typography>
-                <MoreVertIcon
-                  style={{ marginLeft: "50%", color: "darkgray" }}
-                ></MoreVertIcon>
+                <CloseIcon  onClick={(e) => { handleActive(props.idx,e) }}
+                  style={{ marginLeft: "45%", color: "darkgray",fontSize:"2rem" }}
+                ></CloseIcon>
               </div>
               <div>
                 <div

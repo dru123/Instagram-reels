@@ -104,8 +104,8 @@ import {
     let { login,signup } = useContext(AuthContext);
     let useStyles=makeStyles({
          centerDivs:{
-             height:"90vh",
-             width:"90vw",
+             height:"75vh",
+             width:"100%",
              display:"flex",
              justifyContent:"center",
              alignItems:"center",
